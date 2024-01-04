@@ -15,22 +15,25 @@
     </style>
 </head>
 <body>
-    <div class="container mt-5">
-        <h1 class="text-center mb-4">Daftar Tugas</h1>
-        <?php foreach ($tasks as $task): ?>
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title"><?= $task->task_name; ?></h5>
-                    <p class="card-text"><?= $task->description; ?></p>
-                    <small class="text-muted">Tanggal selesai: <?= $task->due_time; ?></small>
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Daftar Tugas</h1>
+    <?php foreach ($tasks as $task): ?>
+        <div class="card <?= ($task->status == 'completed') ? 'completed' : 'ongoing'; ?>">
+            <div class="card-body">
+                <h5 class="card-title"><?= $task->task_name; ?></h5>
+                <p class="card-text"><?= $task->description; ?></p>
+                <small class="text-muted">Tanggal selesai: <?= $task->due_time; ?></small>
+                <p class="text-muted">Status: <?= ucfirst($task->status); ?></p>
+                <?php if ($task->status == 'ongoing'): ?>
                     <a href="<?= site_url('task/edit_tugas/' . $task->task_id); ?>" class="btn btn-primary btn-sm">Edit</a>
-                    <a href="<?= site_url('task/delete/' . $task->task_id); ?>" class="btn btn-danger btn-sm">Hapus</a>
                     <a href="<?= site_url('task/complete/' . $task->task_id); ?>" class="btn btn-success btn-sm">Selesai</a>
-                </div>
+                <?php endif; ?>
+                <a href="<?= site_url('task/delete/' . $task->task_id); ?>" class="btn btn-danger btn-sm">Hapus</a>
             </div>
-        <?php endforeach; ?>
-        <a href="<?= site_url('task/index'); ?>" class="btn btn-secondary mt-3">Kembali</a>
-    </div>
+        </div>
+    <?php endforeach; ?>
+    <a href="<?= site_url('task/index'); ?>" class="btn btn-secondary mt-3">Kembali</a>
+</div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>
 </html>
